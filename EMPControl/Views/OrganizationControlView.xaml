@@ -1,0 +1,460 @@
+﻿<Window x:Class="EMPControl.Views.OrganizationControlView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:EMPControl.ViewModels"
+        xmlns:local="clr-namespace:EMPControl.Views"
+        mc:Ignorable="d"
+        Title="EMPControl" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:OrganizationControlViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <DockPanel>
+            <Grid DockPanel.Dock="Left">
+                <StackPanel Orientation="Vertical" Width="215">
+
+                    <Button x:Name="MoveToCreateButton"
+                        Command="{Binding MoveToCreate}"
+                        Content="Новая организация" Padding="0,5" Margin="10,10,0,0"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+
+                    <Button x:Name="MoveToEditButton"
+                        Command="{Binding MoveToEdit}"
+                        Content="Редактировать" Padding="0,5" Margin="10,10,0,0"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+
+                    <ComboBox x:Name="OrganizationComboBox"
+                        ItemsSource="{Binding Organizations}" DisplayMemberPath="Name"
+                        
+                        Padding="0,5" Margin="10,10,0,0"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+
+                    <Button x:Name="DeleteOrganizationButton"
+                        Command="{Binding MoveToStart}"
+                        Content="Ликвидировать" Padding="0,5" Margin="10,10,0,0"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+
+                </StackPanel>
+
+                <Button x:Name="MoveToStartButton"
+                    Content="Назад" Padding="0,5" Margin="10,10,0,10"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+            </Grid>
+
+
+            <Border BorderBrush="Black" BorderThickness="1" Margin="10"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                <ContentControl Content="{Binding BaseViewModel}">
+                    <ContentControl.Resources>
+
+                        <DataTemplate DataType="{x:Type vm:CreateNewOrganizationViewModel}">
+
+                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+                                <DockPanel>
+
+                                    <StackPanel DockPanel.Dock="Top">
+
+                                        <!--Имя орг.-->
+
+                                        <Label Content="Наименование организации* :"
+                                            FontSize="16" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name ="NameTextBox"
+                                            Text="{Binding Path=OrganizationName, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--ИНН-->
+
+                                        <Label Content="ИНН* :"
+                                            FontSize="16" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="TINTextBox"
+                                            Text="{Binding Path=OrganizationTIN, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                    </StackPanel>
+
+                                    <StackPanel DockPanel.Dock="Left" Width="280">
+
+                                        <!--Юр. адрес-->
+
+                                        <Label Content="Юридический адрес:"
+                                            FontSize="16" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <!--Страна-->
+
+                                        <Label Content="Страна:" 
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,0,0,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="LegalCountryTextBox"
+                                            Text="{Binding Path=OrganizationLegalAddress, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Регион-->
+
+                                        <Label Content="Регион:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="LegalRegionTextBox"
+                                            Text="{Binding Path=OrganizationLegalAddress, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Населенный пункт-->
+
+                                        <Label Content="Населенный пункт:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="LegalSettlementTextBox"
+                                            Text="{Binding Path=OrganizationLegalAddress, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Улица-->
+
+                                        <Label Content="Улица:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="LegalStreetTextBox"
+                                            Text="{Binding Path=OrganizationLegalAddress, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Дом-->
+
+                                        <Label Content="Дом:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="LegalBuildingTextBox"
+                                            Text="{Binding Path=OrganizationLegalAddress, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Офис-->
+
+                                        <Label Content="Квартира/Офис:" 
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="LegalOfficeTextBox"
+                                            Text="{Binding Path=OrganizationLegalAddress, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                    </StackPanel>
+
+                                    <StackPanel DockPanel.Dock="Right">
+
+                                        <!--Физ. адрес-->
+
+                                        <Label Content="Физический адрес:"
+                                            FontSize="16" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <!--Страна-->
+
+                                        <Label Content="Страна:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,0,0,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="PhysicalCountryTextBox" 
+                                            Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}" 
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Регион-->
+
+                                        <Label Content="Регион:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="PhysicalRegionTextBox" 
+                                            Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Населенный пункт-->
+
+                                        <Label Content="Населенный пункт:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="PhysicalSattlementTextBox"  
+                                            Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Улица-->
+
+                                        <Label Content="Улица:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="PhysicalStreetTextBox"  
+                                            Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Дом-->
+
+                                        <Label Content="Дом:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="PhysicalBuildingTextBox"  
+                                            Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Офис-->
+
+                                        <Label Content="Квартира/Офис:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="PhysicalOfficeTextBox"  
+                                            Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <Button x:Name="CreateButton"
+                                            Command="{Binding CreateOrganization}"
+                                            Content="Создать" Padding="0,5" Margin="10"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+
+                                    </StackPanel>
+
+                                </DockPanel>
+                            </ScrollViewer>
+
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type vm:EditOrganizationViewModel}">
+
+                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+                                <DockPanel>
+
+                                    <StackPanel DockPanel.Dock="Top">
+
+                                        <!--Имя орг.-->
+
+                                        <Label Content="Наименование организации* :"
+                                            FontSize="16" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name ="NameTextBox"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--ИНН-->
+
+                                        <Label Content="ИНН* :"
+                                            FontSize="16" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="TINTextBox"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                    </StackPanel>
+
+                                    <StackPanel DockPanel.Dock="Left" Width="280">
+
+                                        <!--Юр. адрес-->
+
+                                        <Label Content="Юридический адрес:"
+                                            FontSize="16" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <!--Страна-->
+
+                                        <Label Content="Страна:" 
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,0,0,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="LegalCountryTextBox"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Регион-->
+
+                                        <Label Content="Регион:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="LegalRegionTextBox"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Населенный пункт-->
+
+                                        <Label Content="Населенный пункт:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="LegalSettlementTextBox"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Улица-->
+
+                                        <Label Content="Улица:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="LegalStreetTextBox"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Дом-->
+
+                                        <Label Content="Дом:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="LegalBuildingTextBox"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Офис-->
+
+                                        <Label Content="Квартира/Офис:" 
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="LegalOfficeTextBox"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                    </StackPanel>
+
+                                    <StackPanel DockPanel.Dock="Right">
+
+                                        <!--Физ. адрес-->
+
+                                        <Label Content="Физический адрес:"
+                                            FontSize="16" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <!--Страна-->
+
+                                        <Label Content="Страна:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,0,0,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="PhysicalCountryTextBox" 
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Регион-->
+
+                                        <Label Content="Регион:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="PhysicalRegionTextBox"
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Населенный пункт-->
+
+                                        <Label Content="Населенный пункт:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="PhysicalSattlementTextBox" 
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Улица-->
+
+                                        <Label Content="Улица:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="PhysicalStreetTextBox" 
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Дом-->
+
+                                        <Label Content="Дом:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="PhysicalBuildingTextBox" 
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <!--Офис-->
+
+                                        <Label Content="Квартира/Офис:"
+                                            FontSize="14" Padding="2,5,0,5" Margin="10,5"
+                                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                                        <TextBox x:Name="PhysicalOfficeTextBox" 
+                                            TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                            Padding="2,5" Margin="10,0"/>
+
+                                        <Button x:Name="CreateButton"
+                                            Content="Сохранить" Padding="0,5" Margin="10"
+                                            HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+
+                                    </StackPanel>
+
+                                </DockPanel>
+                            </ScrollViewer>
+
+                        </DataTemplate>
+
+                    </ContentControl.Resources>
+                </ContentControl>
+
+            </Border>
+
+        </DockPanel>
+    </Grid>
+</Window>
