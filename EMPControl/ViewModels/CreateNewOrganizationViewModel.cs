@@ -3,6 +3,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,9 @@ namespace EMPControl.ViewModels
     class CreateNewOrganizationViewModel : BindableBase
     {
         readonly OrganizationModel organizationModel;
+
+        public ObservableCollection<string> legalAddressHolder;        //*
+        public ObservableCollection<string> physicalAddressHolder;     //*
 
         public string OrganizationName
         {
@@ -34,32 +38,34 @@ namespace EMPControl.ViewModels
             }
         }
 
-        public string OrganizationLegalAddress
+        public ObservableCollection<string> OrganizationLegalAddress
         {
-            get { return organizationModel.LegalAddress; }
+            get { return legalAddressHolder; }
             set
             {
-                organizationModel.LegalAddress += " ";
-                organizationModel.LegalAddress += value;
+                legalAddressHolder = value;
                 RaisePropertyChanged(nameof(OrganizationLegalAddress));
             }
         }
 
-        public string OrganizationPhysicalAddress
+        public ObservableCollection<string> OrganizationPhysicalAddress
         {
-            get { return organizationModel.PhysicalAddress; }
+            get { return legalAddressHolder; }
             set
             {
-                organizationModel.PhysicalAddress += " ";
-                organizationModel.PhysicalAddress += value;
+                physicalAddressHolder = value;
                 RaisePropertyChanged(nameof(OrganizationPhysicalAddress));
             }
         }
 
         public CreateNewOrganizationViewModel()
         {
+            legalAddressHolder = new ObservableCollection<string>();        //*
+            physicalAddressHolder = new ObservableCollection<string>();     //*
+
             organizationModel = new OrganizationModel();
             organizationModel.Id = Guid.NewGuid().ToString();
+            
 
             CreateOrganization = new DelegateCommand(() =>
             {
@@ -67,6 +73,11 @@ namespace EMPControl.ViewModels
                 {
                     try
                     {
+                        //not working
+
+                        organizationModel.LegalAddress = AddressHolderToString(legalAddressHolder);         //*
+                        organizationModel.PhysicalAddress = AddressHolderToString(physicalAddressHolder);   //*
+
                         Db.Organizations.Add(organizationModel);
                         Db.SaveChanges();
                     }
@@ -81,5 +92,21 @@ namespace EMPControl.ViewModels
         }
 
         public DelegateCommand CreateOrganization { get; }
+
+        private string AddressHolderToString(ObservableCollection<string> list)     //*
+        {
+            string finalValue = string.Empty;
+            foreach (var item in list)
+            {
+                if (item == null)
+                {
+                    finalValue += (item + " ");
+                }
+            }
+
+            MessageBox.Show(finalValue);
+
+            return finalValue;
+        }
     }
 }

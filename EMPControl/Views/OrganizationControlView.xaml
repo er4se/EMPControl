@@ -4,12 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:EMPControl.ViewModels"
+        xmlns:inst="clr-namespace:EMPControl.Instruments"
         xmlns:local="clr-namespace:EMPControl.Views"
         mc:Ignorable="d"
         Title="EMPControl" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:OrganizationControlViewModel/>
     </Window.DataContext>
+
+    <Window.Resources>
+        <inst:IndexToBoolConverter x:Key="IndexToBoolConverter"/>
+    </Window.Resources>
 
     <Grid>
         <DockPanel>
@@ -20,20 +25,22 @@
                         Command="{Binding MoveToCreate}"
                         Content="Новая организация" Padding="0,5" Margin="10,10,0,0"
                         HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                    
+                    <ComboBox x:Name="OrganizationComboBox"
+                        ItemsSource="{Binding Organizations}" DisplayMemberPath="Name"
+                        SelectedItem="{Binding Path=OrganizationModel, Mode=OneWayToSource}"
+                        Padding="0,5" Margin="10,10,0,0"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
 
                     <Button x:Name="MoveToEditButton"
                         Command="{Binding MoveToEdit}"
+                        IsEnabled="{Binding ElementName=OrganizationComboBox, Path=SelectedIndex, Converter={StaticResource IndexToBoolConverter}}"
                         Content="Редактировать" Padding="0,5" Margin="10,10,0,0"
-                        HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
-
-                    <ComboBox x:Name="OrganizationComboBox"
-                        ItemsSource="{Binding Organizations}" DisplayMemberPath="Name"
-                        
-                        Padding="0,5" Margin="10,10,0,0"
                         HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
 
                     <Button x:Name="DeleteOrganizationButton"
                         Command="{Binding MoveToStart}"
+                        IsEnabled="{Binding ElementName=OrganizationComboBox, Path=SelectedIndex, Converter={StaticResource IndexToBoolConverter}}"
                         Content="Ликвидировать" Padding="0,5" Margin="10,10,0,0"
                         HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
 
@@ -50,6 +57,9 @@
 
                 <ContentControl Content="{Binding BaseViewModel}">
                     <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type vm:OrganizationControlViewModel}">
+                            <Label Content="Добро пожаловать" FontSize="28" Margin="10"/>
+                        </DataTemplate>
 
                         <DataTemplate DataType="{x:Type vm:CreateNewOrganizationViewModel}">
 
@@ -163,6 +173,14 @@
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>
+                                        
+                                        <!--Совпадает-->
+
+                                        <CheckBox x:Name="isAddressesEquals"
+                                            IsChecked="False"
+                                            Content="Юр. адрес не совпадает с физ. адресом"
+                                            FontSize="12" Margin="10"
+                                            />
 
                                     </StackPanel>
 
@@ -180,7 +198,8 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,0,0,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalCountryTextBox" 
+                                        <TextBox x:Name="PhysicalCountryTextBox"
+                                            IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
                                             Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}" 
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -192,7 +211,8 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalRegionTextBox" 
+                                        <TextBox x:Name="PhysicalRegionTextBox"
+                                            IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
                                             Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -205,6 +225,7 @@
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                                         <TextBox x:Name="PhysicalSattlementTextBox"  
+                                            IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
                                             Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -216,7 +237,8 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalStreetTextBox"  
+                                        <TextBox x:Name="PhysicalStreetTextBox"
+                                            IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
                                             Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -228,7 +250,8 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalBuildingTextBox"  
+                                        <TextBox x:Name="PhysicalBuildingTextBox"
+                                            IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
                                             Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -240,7 +263,8 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalOfficeTextBox"  
+                                        <TextBox x:Name="PhysicalOfficeTextBox"
+                                            IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
                                             Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"

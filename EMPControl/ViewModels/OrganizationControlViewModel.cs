@@ -18,6 +18,17 @@ namespace EMPControl.ViewModels
     {
         public Action CloseAction { get; set; }
         public ObservableCollection<OrganizationModel> organizations { get; set; }
+        public OrganizationModel organization { get; set; }
+
+        public OrganizationModel OrganizationModel      //перенести
+        {
+            get { return organization; }
+            set
+            {
+                organization = value;
+                RaisePropertyChanged(nameof(OrganizationModel));
+            }
+        }
 
         private BindableBase baseViewModel;
 
@@ -43,6 +54,8 @@ namespace EMPControl.ViewModels
 
         public OrganizationControlViewModel()
         {
+            BaseViewModel = this;
+
             using (OrganizationsContext Db = new OrganizationsContext())
             {
                 try
@@ -62,18 +75,6 @@ namespace EMPControl.ViewModels
             MoveToCreate = new DelegateCommand(() =>
             {
                 BaseViewModel = new CreateNewOrganizationViewModel();
-                using (OrganizationsContext Db = new OrganizationsContext())
-                {
-                    try
-                    {
-                        var list = Db.Organizations.FirstOrDefault();
-                        //Organizations = new ObservableCollection<OrganizationModel>(list);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                }
             });
 
             MoveToEdit = new DelegateCommand(() =>
