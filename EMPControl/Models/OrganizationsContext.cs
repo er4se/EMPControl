@@ -14,7 +14,7 @@ namespace EMPControl.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=DESKTOP-1I09KJT;DataBase=EMPDataBase;Trusted_Connection=Yes;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("server=DESKTOP-42P08Q2;DataBase=EMPDataBase;Trusted_Connection=Yes;TrustServerCertificate=True;");
         }
     }
 }

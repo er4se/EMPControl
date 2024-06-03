@@ -109,7 +109,7 @@
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                                         <TextBox x:Name="LegalCountryTextBox"
-                                            Text="{Binding Path=OrganizationLegalAddress, Mode=OneWayToSource}"
+                                            Text="{Binding Path=LegalAddressCountry, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>
@@ -121,7 +121,7 @@
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                                         <TextBox x:Name="LegalRegionTextBox"
-                                            Text="{Binding Path=OrganizationLegalAddress, Mode=OneWayToSource}"
+                                            Text="{Binding Path=LegalAddressRegion, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>
@@ -133,7 +133,7 @@
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                                         <TextBox x:Name="LegalSettlementTextBox"
-                                            Text="{Binding Path=OrganizationLegalAddress, Mode=OneWayToSource}"
+                                            Text="{Binding Path=LegalAddressSettlement, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>
@@ -145,7 +145,7 @@
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                                         <TextBox x:Name="LegalStreetTextBox"
-                                            Text="{Binding Path=OrganizationLegalAddress, Mode=OneWayToSource}"
+                                            Text="{Binding Path=LegalAddressStreet, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>
@@ -157,7 +157,7 @@
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                                         <TextBox x:Name="LegalBuildingTextBox"
-                                            Text="{Binding Path=OrganizationLegalAddress, Mode=OneWayToSource}"
+                                            Text="{Binding Path=LegalAddressBuilding, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>
@@ -169,7 +169,7 @@
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
                                         <TextBox x:Name="LegalOfficeTextBox"
-                                            Text="{Binding Path=OrganizationLegalAddress, Mode=OneWayToSource}"
+                                            Text="{Binding Path=LegalAddressOffice, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>
@@ -177,7 +177,7 @@
                                         <!--Совпадает-->
 
                                         <CheckBox x:Name="isAddressesEquals"
-                                            IsChecked="False"
+                                            IsChecked="{Binding Path=IsAddressesNotEquals, Mode=TwoWay}"
                                             Content="Юр. адрес не совпадает с физ. адресом"
                                             FontSize="12" Margin="10"
                                             />
@@ -200,7 +200,7 @@
 
                                         <TextBox x:Name="PhysicalCountryTextBox"
                                             IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
-                                            Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}" 
+                                            Text="{Binding Path=PhysicalAddressCountry, Mode=OneWayToSource}" 
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>
@@ -213,7 +213,7 @@
 
                                         <TextBox x:Name="PhysicalRegionTextBox"
                                             IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
-                                            Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
+                                            Text="{Binding Path=PhysicalAddressRegion, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>
@@ -226,7 +226,7 @@
 
                                         <TextBox x:Name="PhysicalSattlementTextBox"  
                                             IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
-                                            Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
+                                            Text="{Binding Path=PhysicalAddressSettlement, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>
@@ -239,7 +239,7 @@
 
                                         <TextBox x:Name="PhysicalStreetTextBox"
                                             IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
-                                            Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
+                                            Text="{Binding Path=PhysicalAddressStreet, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>
@@ -252,7 +252,7 @@
 
                                         <TextBox x:Name="PhysicalBuildingTextBox"
                                             IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
-                                            Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
+                                            Text="{Binding Path=PhysicalAddressBuilding, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>
@@ -265,7 +265,7 @@
 
                                         <TextBox x:Name="PhysicalOfficeTextBox"
                                             IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
-                                            Text="{Binding Path=OrganizationPhysicalAddress, Mode=OneWayToSource}"
+                                            Text="{Binding Path=PhysicalAddressOffice, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
                                             Padding="2,5" Margin="10,0"/>

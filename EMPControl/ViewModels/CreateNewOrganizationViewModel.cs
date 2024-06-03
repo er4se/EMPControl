@@ -13,10 +13,22 @@ namespace EMPControl.ViewModels
 {
     class CreateNewOrganizationViewModel : BindableBase
     {
+        bool isAddressesNotEquals;
+
         readonly OrganizationModel organizationModel;
 
-        public ObservableCollection<string> legalAddressHolder;        //*
-        public ObservableCollection<string> physicalAddressHolder;     //*
+        readonly AddressModel legalAddress;
+        readonly AddressModel physicalAddress;
+
+        public bool IsAddressesNotEquals
+        {
+            get { return isAddressesNotEquals; }
+            set 
+            { 
+                isAddressesNotEquals = value; 
+                RaisePropertyChanged(nameof(IsAddressesNotEquals));
+            }
+        }
 
         public string OrganizationName
         {
@@ -38,37 +50,157 @@ namespace EMPControl.ViewModels
             }
         }
 
-        public ObservableCollection<string> OrganizationLegalAddress
+        #region "LegalAddressProperty"
+
+        public string LegalAddressCountry
         {
-            get { return legalAddressHolder; }
+            get { return legalAddress.Country; }
             set
             {
-                legalAddressHolder = value;
-                RaisePropertyChanged(nameof(OrganizationLegalAddress));
+                legalAddress.Country = value;
+                RaisePropertyChanged(nameof(LegalAddressCountry));
             }
         }
 
+        public string LegalAddressRegion
+        {
+            get { return legalAddress.Region; }
+            set
+            {
+                legalAddress.Region = value;
+                RaisePropertyChanged(nameof(LegalAddressRegion));
+            }
+        }
+
+        public string LegalAddressSettlement
+        {
+            get { return legalAddress.Settlement; }
+            set
+            {
+                legalAddress.Settlement = value;
+                RaisePropertyChanged(nameof(LegalAddressSettlement));
+            }
+        }
+
+        public string LegalAddressStreet
+        {
+            get { return legalAddress.Street; }
+            set
+            {
+                legalAddress.Street = value;
+                RaisePropertyChanged(nameof(LegalAddressStreet));
+            }
+        }
+
+        public string LegalAddressBuilding
+        {
+            get { return legalAddress.Building; }
+            set
+            {
+                legalAddress.Building = value;
+                RaisePropertyChanged(nameof(LegalAddressBuilding));
+            }
+        }
+
+        public string LegalAddressOffice
+        {
+            get { return legalAddress.Office; }
+            set
+            {
+                legalAddress.Office = value;
+                RaisePropertyChanged(nameof(LegalAddressOffice));
+            }
+        }
+
+        #endregion
+
+        #region "PhysicalAddressProperty"
+
+        public string PhysicalAddressCountry
+        {
+            get { return physicalAddress.Country; }
+            set
+            {
+                physicalAddress.Country = value;
+                RaisePropertyChanged(nameof(PhysicalAddressCountry));
+            }
+        }
+
+        public string PhysicalAddressRegion
+        {
+            get { return physicalAddress.Region; }
+            set
+            {
+                physicalAddress.Region = value;
+                RaisePropertyChanged(nameof(PhysicalAddressRegion));
+            }
+        }
+
+        public string PhysicalAddressSettlement
+        {
+            get { return physicalAddress.Settlement; }
+            set
+            {
+                physicalAddress.Settlement = value;
+                RaisePropertyChanged(nameof(PhysicalAddressSettlement));
+            }
+        }
+
+        public string PhysicalAddressStreet
+        {
+            get { return physicalAddress.Street; }
+            set
+            {
+                physicalAddress.Street = value;
+                RaisePropertyChanged(nameof(PhysicalAddressStreet));
+            }
+        }
+
+        public string PhysicalAddressBuilding
+        {
+            get { return physicalAddress.Building; }
+            set
+            {
+                physicalAddress.Building = value;
+                RaisePropertyChanged(nameof(PhysicalAddressBuilding));
+            }
+        }
+
+        public string PhysicalAddressOffice
+        {
+            get { return physicalAddress.Office; }
+            set
+            {
+                physicalAddress.Office = value;
+                RaisePropertyChanged(nameof(PhysicalAddressOffice));
+            }
+        }
+
+        #endregion
 
         public CreateNewOrganizationViewModel()
         {
-            legalAddressHolder = new ObservableCollection<string>();        //*
-            physicalAddressHolder = new ObservableCollection<string>();     //*
+            isAddressesNotEquals = false;
 
             organizationModel = new OrganizationModel();
             organizationModel.Id = Guid.NewGuid().ToString();
-            
+
+            legalAddress = new AddressModel();
+            physicalAddress = new AddressModel();
 
             CreateOrganization = new DelegateCommand(() =>
             {
-                using(OrganizationsContext Db = new OrganizationsContext())
+                organizationModel.LegalAddress = legalAddress.GetFullAddressString();
+
+                if (isAddressesNotEquals)
+                    organizationModel.PhysicalAddress = physicalAddress.GetFullAddressString();
+                else
+                    organizationModel.PhysicalAddress = legalAddress.GetFullAddressString();
+
+                using (OrganizationsContext Db = new OrganizationsContext())
                 {
                     try
                     {
-                        //not working
-
-                        organizationModel.LegalAddress = AddressHolderToString(legalAddressHolder);         //*
-                        organizationModel.PhysicalAddress = AddressHolderToString(physicalAddressHolder);   //*
-
                         Db.Organizations.Add(organizationModel);
                         Db.SaveChanges();
                     }
@@ -79,25 +211,11 @@ namespace EMPControl.ViewModels
                 }
 
                 MessageBox.Show("Организация добавлена!");
+
+                //Добавить сброс информации
             });
         }
 
         public DelegateCommand CreateOrganization { get; }
-
-        private string AddressHolderToString(ObservableCollection<string> list)     //*
-        {
-            string finalValue = string.Empty;
-            foreach (var item in list)
-            {
-                if (item == null)
-                {
-                    finalValue += (item + " ");
-                }
-            }
-
-            MessageBox.Show(finalValue);
-
-            return finalValue;
-        }
     }
 }

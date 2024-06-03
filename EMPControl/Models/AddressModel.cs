@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace EMPControl.Models
 {
-    public struct AddressModel
+    class AddressModel
     {
-        public string Country       { get; set; }
-        public string Region        { get; set; }
-        public string Settlement    { get; set; }
-        public string Street        { get; set; }
-        public string Building      { get; set; }
-        public string Office        { get; set; }
+        public string Country       { get; set; } = String.Empty;
+        public string Region        { get; set; } = String.Empty;
+        public string Settlement    { get; set; } = String.Empty;
+        public string Street        { get; set; } = String.Empty;
+        public string Building      { get; set; } = String.Empty;
+        public string Office        { get; set; } = String.Empty;
 
         public void NormalizeAddress()
         {
@@ -23,6 +23,23 @@ namespace EMPControl.Models
             Street      = Street.Trim();
             Building    = Building.Trim();
             Office      = Office.Trim();
+        }
+
+        public string GetFullAddressString()
+        {
+            NormalizeAddress();
+
+            var fullAddress = new StringBuilder();
+
+            fullAddress
+                .Append(Country).Append((char)32)
+                .Append(Region).Append((char)32)
+                .Append(Settlement).Append((char)32)
+                .Append(Street).Append((char)32)
+                .Append(Building).Append((char)32)
+                .Append(Office);
+
+            return fullAddress.ToString();
         }
     }
 }
