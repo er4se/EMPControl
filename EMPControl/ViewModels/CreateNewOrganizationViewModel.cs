@@ -48,15 +48,6 @@ namespace EMPControl.ViewModels
             }
         }
 
-        public ObservableCollection<string> OrganizationPhysicalAddress
-        {
-            get { return legalAddressHolder; }
-            set
-            {
-                physicalAddressHolder = value;
-                RaisePropertyChanged(nameof(OrganizationPhysicalAddress));
-            }
-        }
 
         public CreateNewOrganizationViewModel()
         {
