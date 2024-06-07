@@ -1,24 +1,29 @@
-﻿using EMPControl.Models;
+﻿using System;
+using System.Windows;
+
 using Prism.Commands;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+
+using EMPControl.Models;
 
 namespace EMPControl.ViewModels
 {
+
+    //ViewModel создание новой организации
+
     class CreateNewOrganizationViewModel : BindableBase
     {
-        bool isAddressesNotEquals;
+        public DelegateCommand CreateOrganization { get; }      //Команда создания организации в БД
 
-        readonly OrganizationModel organizationModel;
+        bool isAddressesNotEquals;                              //Переключатель CheckBox
 
-        readonly AddressModel legalAddress;
-        readonly AddressModel physicalAddress;
+        readonly OrganizationModel organizationModel;           //Модель организации
+        readonly AddressModel legalAddress;                     //Модель юр. адреса организации
+        readonly AddressModel physicalAddress;                  //Модель физ. адреса организации
+
+        //Открытые свойства для связи с View
+
+        #region "public properties"
 
         public bool IsAddressesNotEquals
         {
@@ -178,44 +183,37 @@ namespace EMPControl.ViewModels
 
         #endregion
 
+        #endregion
+
+        //Конструктор для инициализации полей и команд
+
         public CreateNewOrganizationViewModel()
         {
             isAddressesNotEquals = false;
 
-            organizationModel = new OrganizationModel();
-            organizationModel.Id = Guid.NewGuid().ToString();
+            organizationModel   = new OrganizationModel();
+            legalAddress        = new AddressModel();
+            physicalAddress     = new AddressModel();
 
-            legalAddress = new AddressModel();
-            physicalAddress = new AddressModel();
+            //Команда. Присвоение и стандартизация адресов, создание объекта в БД, сброс данных, оповещение
 
             CreateOrganization = new DelegateCommand(() =>
             {
-                organizationModel.LegalAddress = legalAddress.GetFullAddressString();
-
-                if (isAddressesNotEquals)
-                    organizationModel.PhysicalAddress = physicalAddress.GetFullAddressString();
-                else
-                    organizationModel.PhysicalAddress = legalAddress.GetFullAddressString();
-
-                using (OrganizationsContext Db = new OrganizationsContext())
-                {
-                    try
-                    {
-                        Db.Organizations.Add(organizationModel);
-                        Db.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                }
-
+                SetAddressToModel();
+                OrganizationDbService.Create(organizationModel);
+                organizationModel.ResetToDefault();
+                
                 MessageBox.Show("Организация добавлена!");
 
-                //Добавить сброс информации
             });
         }
 
-        public DelegateCommand CreateOrganization { get; }
+        //Присвоение и стандартизация адресов
+
+        private void SetAddressToModel()
+        {
+            organizationModel.LegalAddress = legalAddress.GetFullAddressString();
+            organizationModel.PhysicalAddress = isAddressesNotEquals ? physicalAddress.GetFullAddressString() : legalAddress.GetFullAddressString();
+        }
     }
 }

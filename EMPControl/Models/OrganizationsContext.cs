@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace EMPControl.Models
 {
+
+    //Класс контекста базы данных, подключается к БД (MSSQL)
+
     class OrganizationsContext : DbContext
     {
         public DbSet<OrganizationModel> Organizations { get; set; }

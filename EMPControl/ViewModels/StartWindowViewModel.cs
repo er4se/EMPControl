@@ -9,9 +9,14 @@ using System.Threading.Tasks;
 
 namespace EMPControl.ViewModels
 {
+
+    //ViewModel стартовое меню
+
     class StartWindowViewModel : BindableBase
     {
         public Action CloseAction { get; set; }
+
+        public DelegateCommand MoveToOrganizationControl { get; }
 
         public StartWindowViewModel()
         {
@@ -24,6 +29,6 @@ namespace EMPControl.ViewModels
             });
         }
 
-        public DelegateCommand MoveToOrganizationControl { get; }
+        
     }
 }

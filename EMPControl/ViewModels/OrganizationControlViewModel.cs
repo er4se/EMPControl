@@ -1,36 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using EMPControl.Models;
-using EMPControl.Views;
+
 using Prism.Commands;
 using Prism.Mvvm;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
+
+using EMPControl.Models;
 
 namespace EMPControl.ViewModels
 {
+
+    //ViewModel управление организациями
+
     class OrganizationControlViewModel : BindableBase
     {
-        public Action CloseAction { get; set; }
-        public ObservableCollection<OrganizationModel> organizations { get; set; }
-        public OrganizationModel organization { get; set; }
+        public DelegateCommand MoveToCreate { get; }                            //Команда перехода к созданию организации
+        public DelegateCommand MoveToEdit { get; }                              //Команда перехода к редактированию организации
+        public DelegateCommand MoveToStart { get; }                             //Команда возврата в главное меню
+        public DelegateCommand LiqudateOrganization { get; }                    //Команда ликвидации организации
+        public DelegateCommand RefreshOrganizationCollectionCommand { get; }    //Команда обновления списка организаций
 
-        public OrganizationModel OrganizationModel      //перенести
-        {
-            get { return organization; }
-            set
-            {
-                organization = value;
-                RaisePropertyChanged(nameof(OrganizationModel));
-            }
-        }
+        //public Action CloseAction { get; set; }
 
-        private BindableBase baseViewModel;
+        private OrganizationModel organizationModel;                            //Модель организации
+        private ObservableCollection<OrganizationModel> organizationsModels;    //Коллекция организаций
+        private BindableBase baseViewModel;                                     //Экземпляр базового ViewModel
+
+        //Открытые свойства для связи с View
+
+        #region "public properties"
 
         public BindableBase BaseViewModel
         {
@@ -42,57 +40,86 @@ namespace EMPControl.ViewModels
             }
         }
 
-        public ObservableCollection<OrganizationModel> Organizations
+        public OrganizationModel OrganizationModel
         {
-            get { return organizations; }
+            get { return organizationModel; }
             set
             {
-                organizations = value;
-                RaisePropertyChanged(nameof(Organizations));
+                organizationModel = value;
+                RaisePropertyChanged(nameof(OrganizationModel));
             }
         }
 
+        public ObservableCollection<OrganizationModel> OrganizationsModels
+        {
+            get { return organizationsModels; }
+            set
+            {
+                organizationsModels = value;
+                RaisePropertyChanged(nameof(OrganizationsModels));
+            }
+        }
+
+        #endregion
+
+        //Конструктор для инициализации полей и команд
+
         public OrganizationControlViewModel()
         {
-            BaseViewModel = this;
+            organizationModel = new OrganizationModel();
+            organizationsModels = new ObservableCollection<OrganizationModel>();
 
-            using (OrganizationsContext Db = new OrganizationsContext())
-            {
-                try
-                {
-                    var list = Db.Organizations.ToList();
-                    Organizations = new ObservableCollection<OrganizationModel>(list);
-                    //var list = Db.Organizations.FirstOrDefault();
-                    //Organizations.Add(list);
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                
-            }
+            baseViewModel = this;
+
+            RefreshOrganizationCollection();
+
+            //Команда. Апкаст базового ViewModel к Create
 
             MoveToCreate = new DelegateCommand(() =>
             {
                 BaseViewModel = new CreateNewOrganizationViewModel();
             });
 
+            //Команда. Апкаст базового ViewModel к edit, проверка на null
+
             MoveToEdit = new DelegateCommand(() =>
             {
-                BaseViewModel = new EditOrganizationViewModel();
+                if (baseViewModel != null) BaseViewModel = new EditOrganizationViewModel(OrganizationModel);
+                else MessageBox.Show("Не выбрана действующая организация");
             });
+
+            //Команда. Возвращение к стартовому меню
 
             MoveToStart = new DelegateCommand(() =>
             {
-                StartWindowView instance = new StartWindowView();
-                instance.Show();
-
-                CloseAction();
+                //Функционал в разработке
             });
+
+            //Команда. Удаление объекта из БД, удаление объекта из коллекции, оповещение
+
+            LiqudateOrganization = new DelegateCommand(() =>
+            {
+                if (OrganizationModel != null)
+                {
+                    var tempInfoString = OrganizationModel.Name;
+                    OrganizationDbService.Delete(OrganizationModel);
+                    OrganizationsModels.Remove(OrganizationModel);
+
+                    MessageBox.Show("Организация " +  tempInfoString + " ликвидирована!");
+                }
+            });
+
+            //Команда. Обновление списка организаций
+
+            RefreshOrganizationCollectionCommand = new DelegateCommand(RefreshOrganizationCollection);
         }
 
-        public DelegateCommand MoveToCreate { get; }
-        public DelegateCommand MoveToEdit { get; }
-        public DelegateCommand MoveToStart { get; }
+        //Обновление списка организаций
+
+        private void RefreshOrganizationCollection()
+        {
+            List<OrganizationModel> list = OrganizationDbService.Read();
+            OrganizationsModels = new ObservableCollection<OrganizationModel>(list);
+        }
     }
 }

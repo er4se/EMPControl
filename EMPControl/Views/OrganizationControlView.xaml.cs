@@ -27,10 +27,10 @@ namespace EMPControl.Views
             OrganizationControlViewModel viewModel = new OrganizationControlViewModel();
             this.DataContext = viewModel;
 
-            if (viewModel.CloseAction == null)
-            {
-                viewModel.CloseAction = new Action(this.Close);
-            }
+            //if (viewModel.CloseAction == null)
+            //{
+            //    viewModel.CloseAction = new Action(this.Close);
+            //}
         }
     }
 }
