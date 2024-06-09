@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
 
 namespace EMPControl.Models
 {
+
+    //Статический класс для реализации CRUD-операций организаций для БД
+
     static class OrganizationDbService
     {
+
+        //Создание нового объекта в БД
+
         public static void Create(OrganizationModel organizationModel)
         {
             using (OrganizationsContext Db = new OrganizationsContext())
@@ -25,6 +26,8 @@ namespace EMPControl.Models
                 }
             }
         }
+
+        //Считывание объектов из БД
 
         public static List<OrganizationModel> Read()
         {
@@ -42,6 +45,8 @@ namespace EMPControl.Models
                 }
             }
         }
+
+        //Обновление объекта в БД
 
         public static void Update(OrganizationModel organizationModel)
         {
@@ -68,6 +73,8 @@ namespace EMPControl.Models
                 }
             }
         }
+
+        //Удаление объекта в БД
 
         public static void Delete(OrganizationModel organizationModel)
         {

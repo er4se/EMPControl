@@ -32,11 +32,13 @@
                             ItemsSource="{Binding OrganizationsModels}" DisplayMemberPath="Name"
                             SelectedItem="{Binding Path=OrganizationModel, Mode=OneWayToSource}"
                             Padding="0,5" Margin="10,10,10,10" Width="165"
+                            HorizontalContentAlignment="Center"
                             HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
                         
                         <Button x:Name="UpdateOrganizationsCollection"
                             Command="{Binding RefreshOrganizationCollectionCommand}"
-                            Content="R" Padding="0" Margin="0,10,0,10" Width="30"/>
+                            Content="⟳" Padding="0" Margin="0,10,0,10" Width="30"
+                            FontSize="18"/>
                     </StackPanel>
 
                     <Button x:Name="MoveToEditButton"
@@ -66,7 +68,26 @@
                 <ContentControl Content="{Binding BaseViewModel}">
                     <ContentControl.Resources>
                         <DataTemplate DataType="{x:Type vm:OrganizationControlViewModel}">
-                            <Label Content="Добро пожаловать" FontSize="28" Margin="10"/>
+                            
+                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+                                <DockPanel>
+
+                                    <StackPanel DockPanel.Dock="Top">
+                                        <Label Content="EMPControl «Редактор организаций»" 
+                                            FontSize="28" FontWeight="Bold"
+                                            Margin="10,10,10,0"/>
+
+                                        <Label Content="Обучение по работе с программой:"
+                                            FontSize="18" FontWeight="Medium"
+                                            Margin="10,10,10,0"/>
+
+                                        <Image Source="../Resources/Menu.png"
+                                            Margin="10,10,10,0"/>
+                                    </StackPanel>
+
+                                </DockPanel>
+                            </ScrollViewer>
+                            
                         </DataTemplate>
 
                         <DataTemplate DataType="{x:Type vm:CreateNewOrganizationViewModel}">
@@ -116,7 +137,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,0,0,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="LegalCountryTextBox"
+                                        <inst:FormatTextBox x:Name="LegalCountryTextBox"
                                             Text="{Binding Path=LegalAddressCountry, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -128,7 +149,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="LegalRegionTextBox"
+                                        <inst:FormatTextBox x:Name="LegalRegionTextBox"
                                             Text="{Binding Path=LegalAddressRegion, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -140,7 +161,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="LegalSettlementTextBox"
+                                        <inst:FormatTextBox x:Name="LegalSettlementTextBox"
                                             Text="{Binding Path=LegalAddressSettlement, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -152,7 +173,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="LegalStreetTextBox"
+                                        <inst:FormatTextBox x:Name="LegalStreetTextBox"
                                             Text="{Binding Path=LegalAddressStreet, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -164,7 +185,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="LegalBuildingTextBox"
+                                        <inst:FormatTextBox x:Name="LegalBuildingTextBox"
                                             Text="{Binding Path=LegalAddressBuilding, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -176,7 +197,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="LegalOfficeTextBox"
+                                        <inst:FormatTextBox x:Name="LegalOfficeTextBox"
                                             Text="{Binding Path=LegalAddressOffice, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -206,7 +227,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,0,0,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalCountryTextBox"
+                                        <inst:FormatTextBox x:Name="PhysicalCountryTextBox"
                                             IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
                                             Text="{Binding Path=PhysicalAddressCountry, Mode=OneWayToSource}" 
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
@@ -219,7 +240,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalRegionTextBox"
+                                        <inst:FormatTextBox x:Name="PhysicalRegionTextBox"
                                             IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
                                             Text="{Binding Path=PhysicalAddressRegion, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
@@ -232,7 +253,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalSattlementTextBox"  
+                                        <inst:FormatTextBox x:Name="PhysicalSattlementTextBox"  
                                             IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
                                             Text="{Binding Path=PhysicalAddressSettlement, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
@@ -245,7 +266,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalStreetTextBox"
+                                        <inst:FormatTextBox x:Name="PhysicalStreetTextBox"
                                             IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
                                             Text="{Binding Path=PhysicalAddressStreet, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
@@ -258,7 +279,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalBuildingTextBox"
+                                        <inst:FormatTextBox x:Name="PhysicalBuildingTextBox"
                                             IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
                                             Text="{Binding Path=PhysicalAddressBuilding, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
@@ -271,7 +292,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalOfficeTextBox"
+                                        <inst:FormatTextBox x:Name="PhysicalOfficeTextBox"
                                             IsEnabled="{Binding ElementName=isAddressesEquals, Path=IsChecked}"
                                             Text="{Binding Path=PhysicalAddressOffice, Mode=OneWayToSource}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
@@ -337,7 +358,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,0,0,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="LegalCountryTextBox"
+                                        <inst:FormatTextBox x:Name="LegalCountryTextBox"
                                             Text="{Binding Path=LegalAddressCountry, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -349,7 +370,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="LegalRegionTextBox"
+                                        <inst:FormatTextBox x:Name="LegalRegionTextBox"
                                             Text="{Binding Path=LegalAddressRegion, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -361,7 +382,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="LegalSettlementTextBox"
+                                        <inst:FormatTextBox x:Name="LegalSettlementTextBox"
                                             Text="{Binding Path=LegalAddressSettlement, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -373,7 +394,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="LegalStreetTextBox"
+                                        <inst:FormatTextBox x:Name="LegalStreetTextBox"
                                             Text="{Binding Path=LegalAddressStreet, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -385,7 +406,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="LegalBuildingTextBox"
+                                        <inst:FormatTextBox x:Name="LegalBuildingTextBox"
                                             Text="{Binding Path=LegalAddressBuilding, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -397,7 +418,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="LegalOfficeTextBox"
+                                        <inst:FormatTextBox x:Name="LegalOfficeTextBox"
                                             Text="{Binding Path=LegalAddressOffice, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -419,7 +440,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,0,0,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalCountryTextBox"
+                                        <inst:FormatTextBox x:Name="PhysicalCountryTextBox"
                                             Text="{Binding Path=PhysicalAddressCountry, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -431,7 +452,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalRegionTextBox"
+                                        <inst:FormatTextBox x:Name="PhysicalRegionTextBox"
                                             Text="{Binding Path=PhysicalAddressRegion, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -443,7 +464,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalSattlementTextBox"
+                                        <inst:FormatTextBox x:Name="PhysicalSattlementTextBox"
                                             Text="{Binding Path=PhysicalAddressSettlement, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -455,7 +476,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalStreetTextBox"
+                                        <inst:FormatTextBox x:Name="PhysicalStreetTextBox"
                                             Text="{Binding Path=PhysicalAddressStreet, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -467,7 +488,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalBuildingTextBox"
+                                        <inst:FormatTextBox x:Name="PhysicalBuildingTextBox"
                                             Text="{Binding Path=PhysicalAddressBuilding, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
@@ -479,7 +500,7 @@
                                             FontSize="14" Padding="2,5,0,5" Margin="10,5"
                                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <TextBox x:Name="PhysicalOfficeTextBox"
+                                        <inst:FormatTextBox x:Name="PhysicalOfficeTextBox"
                                             Text="{Binding Path=PhysicalAddressOffice, Mode=TwoWay}"
                                             TextWrapping="Wrap" FontSize="14" FontWeight="Bold"
                                             HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalContentAlignment="Center"
