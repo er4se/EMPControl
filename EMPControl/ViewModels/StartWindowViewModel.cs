@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace EMPControl.ViewModels
 {
@@ -17,6 +18,8 @@ namespace EMPControl.ViewModels
         public Action CloseAction { get; set; }
 
         public DelegateCommand MoveToOrganizationControl { get; }
+        public DelegateCommand MoveToEmployeeControl { get; }
+        public DelegateCommand MoveToCSVControl { get; }
 
         public StartWindowViewModel()
         {
@@ -26,6 +29,20 @@ namespace EMPControl.ViewModels
                 instance.Show();
 
                 //CloseAction();
+            });
+
+            MoveToEmployeeControl = new DelegateCommand(() =>
+            {
+                MessageBox.Show("Разработка данного функционала программы заморожена\n" +
+                    "\nПричина: важность pet-проектов на WPF под вопросом, кроме того функционал копирует существующий OrganizationControl\n" +
+                    "\nИтог: возможно разработка продолжится в будущем", "ВНИМАНИЕ!");
+            });
+
+            MoveToCSVControl = new DelegateCommand(() =>
+            {
+                MessageBox.Show("Разработка данного функционала программы заморожена\n" +
+                    "\nПричина: важность pet-проектов на WPF под вопросом\n" +
+                    "\nИтог: возможно разработка продолжится в будущем", "ВНИМАНИЕ!");
             });
         }
 
